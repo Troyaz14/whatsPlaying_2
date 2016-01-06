@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">musicApp</string>
+
+    <string name="thisIsStatic">There are many sources of electromagnetic noise which cause the characteristic display patterns of static. Atmospheric sources of noise are the most ubiquitous, and include electromagnetic signals prompted by cosmic microwave background radiation, or more localized radio wave noise from nearby electronic devices.You wont see this much on TVs anymore because of the digital conversion several years ago. Thats just a shame if you ask me. Its a real shame to be sure.</string>
+    <string name="action_settings">Settings</string>
+    <string name="tvStatic">tv static</string>
+</resources>

@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">buttonShortCuts</string>
+
+    <string name="hello_world">Quick Launch Buttons</string>
+    <string name="Gmail">Go to Gmail</string>
+    <string name="Google">Go to Google</string>
+    <string name="YahooFinance">Go to yahoo finance</string>
+    <string name="Youtube">Go to YouTube</string>
+    <string name="Meetup">Go to Meetup</string>
+    <string name="Amazon">Go to Amazon</string>
+    <string name="action_settings">Settings</string>
+</resources>

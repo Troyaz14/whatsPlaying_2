@@ -1,0 +1,50 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="com.example.troygugler.gameapp.MainActivity">
+
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Jabberwocky"
+        android:id="@+id/jabberwocky"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:onClick="jabberwocky"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nasa"
+        android:id="@+id/nasa"
+        android:onClick="UINasa"
+        android:layout_below="@+id/jabberwocky"
+        android:layout_alignLeft="@+id/jabberwocky"
+        android:layout_alignStart="@+id/jabberwocky" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/title_activity_roundball"
+        android:id="@+id/roundball"
+        android:layout_below="@+id/nasa"
+        android:layout_centerHorizontal="true"
+        android:onClick="roundball"
+        android:layout_alignLeft="@+id/jabberwocky"
+        android:layout_alignStart="@+id/jabberwocky" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="War of the Worlds"
+        android:id="@+id/button4"
+        android:layout_below="@+id/roundball"
+        android:layout_centerHorizontal="true"
+        android:onClick="wow"
+        android:layout_alignLeft="@+id/jabberwocky"
+        android:layout_alignStart="@+id/jabberwocky" />
+</RelativeLayout>

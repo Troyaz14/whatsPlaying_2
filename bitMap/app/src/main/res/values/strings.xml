@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">bitMap</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="perm_lab">permlab_flashlight</string>
+    <string name="perlabflashlight">flashlight</string>
+</resources>

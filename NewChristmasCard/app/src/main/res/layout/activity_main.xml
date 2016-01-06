@@ -1,0 +1,24 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/imageView"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/christmas1"
+        android:scaleType="centerCrop"/>
+    <TextView android:text="@string/hello_world"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="45dp"
+        android:textStyle="bold"
+        android:textColor="@android:color/holo_red_dark"
+        android:gravity="center_horizontal"
+        android:fontFamily="sans-serif-light"
+        />
+
+</RelativeLayout>
