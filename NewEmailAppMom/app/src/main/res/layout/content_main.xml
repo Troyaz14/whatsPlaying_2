@@ -12,8 +12,98 @@
     tools:context="com.example.android.newemailappmom.MainActivity"
     tools:showIn="@layout/activity_main">
 
-    <TextView
-        android:layout_width="wrap_content"
+
+    <ScrollView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <CheckBox
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:button="@drawable/custombuttontroy"
+                android:id="@+id/contact1"/>
+
+            <CheckBox
+                android:layout_marginLeft="150dp"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:button="@drawable/custombuttoncory"
+                android:id="@+id/contact2"
+                android:layout_toRightOf="@id/contact1"/>
+
+            <CheckBox
+                android:layout_marginTop="10dp"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:button="@drawable/custombuttonmarc"
+                android:id="@+id/contact3"
+                android:layout_below="@id/contact1"/>
+
+            <CheckBox
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="150dp"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:button="@drawable/custombuttonpiche"
+                android:id="@+id/contact4"
+                android:layout_toRightOf="@id/contact3"
+                android:layout_below="@id/contact2"/>
+
+            <CheckBox
+                android:layout_marginTop="10dp"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:button="@drawable/custombuttonadrian"
+                android:id="@+id/contact5"
+                android:layout_below="@id/contact3"/>
+
+            <CheckBox
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="150dp"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:button="@drawable/custombuttonbrennen"
+                android:id="@+id/contact6"
+                android:layout_toRightOf="@id/contact5"
+                android:layout_below="@id/contact4"/>
+            <CheckBox
+                android:layout_marginTop="10dp"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:button="@drawable/custombuttondad"
+                android:id="@+id/contact7"
+                android:layout_below="@id/contact5"/>
+
+
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+
+    <Button
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:text="@string/exit"
+        android:id="@+id/exit"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:background="#ffff0000"
+        android:onClick="exitApp"
+        />
+
+    <Button
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:text="@string/Email"
+        android:id="@+id/Email"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:background="#ff00ff00"
+        android:onClick="email"
+         />
+
 </RelativeLayout>
