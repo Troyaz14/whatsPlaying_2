@@ -94,6 +94,16 @@
         android:background="#ffff0000"
         android:onClick="exitApp"
         />
+    <Button
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:text="@string/check_email"
+        android:id="@+id/emailProgram"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:background="#0000FF"
+        android:onClick="openEmail"
+        />
 
     <Button
         android:layout_width="100dp"

@@ -25,8 +25,11 @@
 
         <TextView
             android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="8dp"
             android:text="@string/caption"
-            style="@style/CodeFont" />
+            android:textSize="16sp" />
     </ScrollView>
 
 </RelativeLayout><!-- From: file:/Users/TroysMacBook/AndroidStudioProjects/ILLIAC1/app/src/main/res/layout/activity_main.xml -->

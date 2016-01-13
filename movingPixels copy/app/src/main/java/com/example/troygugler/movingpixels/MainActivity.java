@@ -25,8 +25,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
-
     public void onResume(){
         noise = MediaPlayer.create(this, R.raw.laugh);
         bounce = MediaPlayer.create(this, R.raw.bounce);

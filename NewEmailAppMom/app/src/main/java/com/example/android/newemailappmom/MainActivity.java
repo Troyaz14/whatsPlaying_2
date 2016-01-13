@@ -42,7 +42,11 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
+    public void openEmail(View myView){
+        Intent intent = new Intent();
+        intent.setClass(this,openEmailProgram.class);
+        startActivity(intent);
+    }
     public void exitApp(View myView){
         this.finish();
         System.exit(0);

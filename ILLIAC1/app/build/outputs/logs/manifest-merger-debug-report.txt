@@ -20,7 +20,7 @@ ADDED from /Users/TroysMacBook/AndroidStudioProjects/ILLIAC1/app/src/main/Androi
 		INJECTED from /Users/TroysMacBook/AndroidStudioProjects/ILLIAC1/app/src/main/AndroidManifest.xml
 		INJECTED from /Users/TroysMacBook/AndroidStudioProjects/ILLIAC1/app/src/main/AndroidManifest.xml
 	android:minSdkVersion
-		ADDED from /Users/TroysMacBook/AndroidStudioProjects/ILLIAC1/app/src/main/AndroidManifest.xml:8:9-35
+		ADDED from /Users/TroysMacBook/AndroidStudioProjects/ILLIAC1/app/src/main/AndroidManifest.xml:8:9-34
 		INJECTED from /Users/TroysMacBook/AndroidStudioProjects/ILLIAC1/app/src/main/AndroidManifest.xml
 		INJECTED from /Users/TroysMacBook/AndroidStudioProjects/ILLIAC1/app/src/main/AndroidManifest.xml
 application
