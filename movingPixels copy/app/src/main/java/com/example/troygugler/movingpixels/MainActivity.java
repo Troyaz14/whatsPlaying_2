@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, "onCreate!");
 
 
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.newlayout);
 
 
 

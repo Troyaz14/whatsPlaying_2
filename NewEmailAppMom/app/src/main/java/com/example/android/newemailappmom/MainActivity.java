@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
         Intent i = new Intent(Intent.ACTION_SENDTO,
                 Uri.fromParts("mailto", eMail, null)
         );
-        i.putExtra(Intent.EXTRA_SUBJECT, "Hi from Mom.");
+        i.putExtra(Intent.EXTRA_SUBJECT, "Hi from Mom/Nana.");
         startActivity(i);
     }
 }
