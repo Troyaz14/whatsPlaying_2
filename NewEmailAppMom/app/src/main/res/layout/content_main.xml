@@ -49,9 +49,10 @@
         android:layout_height="wrap_content"
         android:layout_above="@id/exit"
         >
-        <RelativeLayout
+        <TableLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+            <TableRow>
             <CheckBox
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
@@ -64,15 +65,16 @@
                 android:layout_width="wrap_content"
                 android:button="@drawable/custombuttoncory"
                 android:id="@+id/contact2"
-                android:layout_toRightOf="@id/contact1"/>
-
+                />
+            </TableRow>
+            <TableRow>
             <CheckBox
                 android:layout_marginTop="10dp"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
                 android:button="@drawable/custombuttonmarc"
                 android:id="@+id/contact3"
-                android:layout_below="@id/contact1"/>
+               />
 
             <CheckBox
                 android:layout_marginTop="10dp"
@@ -81,16 +83,17 @@
                 android:layout_width="wrap_content"
                 android:button="@drawable/custombuttonpiche"
                 android:id="@+id/contact4"
-                android:layout_toRightOf="@id/contact3"
-                android:layout_below="@id/contact2"/>
 
+               />
+            </TableRow>
+        <TableRow>
             <CheckBox
                 android:layout_marginTop="10dp"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
                 android:button="@drawable/custombuttonadrian"
                 android:id="@+id/contact5"
-                android:layout_below="@id/contact3"/>
+               />
 
             <CheckBox
                 android:layout_marginTop="10dp"
@@ -99,19 +102,21 @@
                 android:layout_width="wrap_content"
                 android:button="@drawable/custombuttonbrennen"
                 android:id="@+id/contact6"
-                android:layout_toRightOf="@id/contact5"
-                android:layout_below="@id/contact4"/>
+
+              />
+            </TableRow>
+            <TableRow>
             <CheckBox
                 android:layout_marginTop="10dp"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
                 android:button="@drawable/custombuttondad"
                 android:id="@+id/contact7"
-                android:layout_below="@id/contact5"/>
+               />
+            </TableRow>
 
 
-
-        </RelativeLayout>
+        </TableLayout>
 
     </ScrollView>
 
