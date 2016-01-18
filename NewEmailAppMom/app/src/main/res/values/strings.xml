@@ -4,4 +4,8 @@
     <string name="exit">Exit</string>
     <string name="Email">Email</string>
     <string name="check_email">Check Email</string>
+    <string name="title_activity_settings">SettingsActivity</string>
+    <string name="sound_key">sound_option</string>
+
+
 </resources>
