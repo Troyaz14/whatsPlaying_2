@@ -1,13 +1,20 @@
 package com.example.android.whatsplaying_2;
 
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridView;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -15,11 +22,21 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 
 /**
  * A placeholder fragment containing a simple view.
  */
 public class MainActivityFragment extends Fragment {
+    private MovieAdapter movieAdapter;
+//    public ArrayAdapter<Movie> myMovies;
+   /* public Movie[] newMovie = {
+        new Movie("lmovieTitle", "lreleaseDate", "lmoviePoster", "lvoteAverage", "String lplotSynopsis"),
+        new Movie("lmovieTitle", "lreleaseDate", "lmoviePoster", "lvoteAverage", "String lplotSynopsis"),
+} ;*/
+    public  Movie[] newMovie;
+
+
 
     public MainActivityFragment() {
     }
@@ -27,14 +44,34 @@ public class MainActivityFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        loadMovies();
+        View rootView = inflater.inflate(R.layout.fragment_main, container,false);
 
-       new loadMovieInfo().execute();
+       // movieAdapter = new MovieAdapter(getActivity(), Arrays.asList(newMovie));
+        movieAdapter = new MovieAdapter(getActivity(), new ArrayList<Movie>());
 
-        return inflater.inflate(R.layout.fragment_main, container, false);
+        GridView gridView = (GridView) rootView.findViewById(R.id.gridview);
+        gridView.setAdapter(movieAdapter);
+
+
+
+        return rootView;
+    }
+    public void onStart(){
+        //pull Json information
+        super.onStart();
+        loadMovies();
     }
 
-    public class loadMovieInfo extends AsyncTask<Void, Void, String[]> {
-        protected String[] doInBackground(Void... params) {
+    public void loadMovies(){
+        new loadMovieInfo().execute();
+    }
+
+    public class loadMovieInfo extends AsyncTask<Void, Void, Movie[]> {
+
+        private final String LOG_TAG = MainActivityFragment.class.getSimpleName();
+
+        protected Movie[] doInBackground(Void... params) {
 
 
             HttpURLConnection urlConnection = null;
@@ -43,18 +80,33 @@ public class MainActivityFragment extends Fragment {
             // Will contain the raw JSON response as a string.
             String forecastJsonStr = null;
             String format = "json";
+            String sortOrder;
+            Uri.Builder builder;
+
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+            sortOrder = prefs.getString(getString(R.string.sort_key), getString(R.string.default_sort_value));
 
             try {
-
-                Uri.Builder builder = new Uri.Builder();
-                builder.scheme("https")
-                        .authority("api.themoviedb.org")
-                        .appendPath("3")
-                        .appendPath("discover")
-                        .appendPath("movie")
-                        .appendQueryParameter("sort_by","popularity.desc")
-                        .appendQueryParameter("api_key", BuildConfig.Movie_db_api_key);
-
+                //building path to website to pull data
+                if(sortOrder.equalsIgnoreCase("Most Popular")) {
+                    builder = new Uri.Builder();
+                    builder.scheme("https")
+                            .authority("api.themoviedb.org")
+                            .appendPath("3")
+                            .appendPath("discover")
+                            .appendPath("movie")
+                            .appendQueryParameter("sort_by", "popularity.desc")
+                            .appendQueryParameter("api_key", BuildConfig.Movie_db_api_key);
+                }else{
+                    builder = new Uri.Builder();
+                    builder.scheme("https")
+                            .authority("api.themoviedb.org")
+                            .appendPath("3")
+                            .appendPath("discover")
+                            .appendPath("movie")
+                            .appendQueryParameter("sort_by", "vote_average.desc")
+                            .appendQueryParameter("api_key", BuildConfig.Movie_db_api_key);
+                }
                 String myUrl = builder.build().toString();
                 System.out.println("URL: "+myUrl);
                 //constructing URL for MovieDB
@@ -72,6 +124,7 @@ public class MainActivityFragment extends Fragment {
                     // Nothing to do.
                     return null;
                 }
+                //buffer reader to improve performance
                 reader = new BufferedReader(new InputStreamReader(inputStream));
 
                 String line;
@@ -87,14 +140,17 @@ public class MainActivityFragment extends Fragment {
                     return null;
                 }
                 forecastJsonStr = buffer.toString();
-                System.out.println("Movies" +forecastJsonStr);
+                System.out.println("Movies" + forecastJsonStr);
+
 
             } catch (
                     IOException e
+
+
                     )
 
             {
-                Log.e("ForcastFragment", "Error ", e);
+                Log.e("loadMovieInfo", "Error ", e);
                 // If the code didn't successfully get the weather data, there's no point in attemping
                 // to parse it.
                 return null;
@@ -108,38 +164,81 @@ public class MainActivityFragment extends Fragment {
                     try {
                         reader.close();
                     } catch (final IOException e) {
-                        Log.e("ForcastFragment", "Error closing stream", e);
+                        Log.e("loadMovieInfo", "Error closing stream", e);
+
                     }
                 }
             }
 
-            //         try {
-            //             return getWeatherDataFromJson(forecastJsonStr, numDays);
-            //         } catch (JSONException e) {
-            //              Log.e(LOG_TAG, e.getMessage(), e);
-            //             e.printStackTrace();
+                     try {
+                         return getMovieData(forecastJsonStr);
+                     } catch (JSONException e) {
+                          Log.e(LOG_TAG, e.getMessage(), e);
+                         e.printStackTrace();
 
-            //       }
+                     }
             //if there is an error parsing the forecast
             return null;
 
+        }
+
+        private Movie[] getMovieData(String forecastJsonStr) throws JSONException{
+            final String getResults = "results";
+            final String lmovieTitle = "title";
+            final String lreleaseDate = "release_date";
+            final String lmoviePoster = "poster_path";
+            final String lvoteAverage = "vote_average";
+            final String lplotSynopsis = "overview";
+
+
+            //get movie info and put it into a JSONArray
+            JSONObject forecastJson = new JSONObject(forecastJsonStr);
+            JSONArray movieArray = forecastJson.getJSONArray(getResults);
+
+            Movie[] moviesPlaying = new Movie[movieArray.length()];
+
+
+            for(int i=0; i<movieArray.length(); i++){
+
+
+                //get individual movie info
+                JSONObject movie = movieArray.getJSONObject(i);
+
+                String title = movie.getString(lmovieTitle);
+                String releaseDate = movie.getString(lreleaseDate);
+                String moviePoster = movie.getString(lmoviePoster);
+                String voteAverage = movie.getString(lvoteAverage);
+                String plot = movie.getString(lplotSynopsis);
+
+
+                System.out.println("poster"+i+moviePoster);
+                System.out.println("poster"+i+title);
+                System.out.println("poster"+i+releaseDate);
+                System.out.println("poster"+i+voteAverage);
+                System.out.println("poster"+i+plot);
+
+
+
+                moviesPlaying[i] = new Movie(title, releaseDate, moviePoster, voteAverage, plot);
+                System.out.print("length: "+moviesPlaying.length);
+
+            }
+
+            return moviesPlaying;
+        }
+
+        protected void onPostExecute(Movie[] result) {
+
+            if (result !=null){
+                movieAdapter.clear();
+                for (Movie dayForecastStr : result){
+                    movieAdapter.add(dayForecastStr);
+                }
+            }
 
         }
 
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 }
