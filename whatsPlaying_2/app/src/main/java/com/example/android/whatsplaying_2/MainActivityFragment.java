@@ -1,5 +1,6 @@
 package com.example.android.whatsplaying_2;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -10,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
 
 import org.json.JSONArray;
@@ -35,32 +37,69 @@ public class MainActivityFragment extends Fragment {
         new Movie("lmovieTitle", "lreleaseDate", "lmoviePoster", "lvoteAverage", "String lplotSynopsis"),
 } ;*/
     public  Movie[] newMovie;
-
+    public ArrayList<Movie> mList;
 
 
     public MainActivityFragment() {
     }
+    public void onCreate(Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
 
+        if(savedInstanceState == null || !savedInstanceState.containsKey("movies")) {
+            // add movie objects to the array adapter
+            mList = new ArrayList<Movie>();
+        }
+        else {
+            mList = savedInstanceState.getParcelableArrayList("movies");
+        }
+    }
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putParcelableArrayList("movies", mList);
+        super.onSaveInstanceState(outState);
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        loadMovies();
+
         View rootView = inflater.inflate(R.layout.fragment_main, container,false);
 
-       // movieAdapter = new MovieAdapter(getActivity(), Arrays.asList(newMovie));
-        movieAdapter = new MovieAdapter(getActivity(), new ArrayList<Movie>());
+        movieAdapter = new MovieAdapter(getActivity(),mList);
 
         GridView gridView = (GridView) rootView.findViewById(R.id.gridview);
         gridView.setAdapter(movieAdapter);
 
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Movie item = movieAdapter.getItem(i);
+                //create intent for placeholder fragment
+                Intent intent = new Intent();
 
+                //put movie information into a bundle and pass to pass it to the intent
+                //Bundle b = new Bundle();
+                //b.putParcelable("selectedMovie",item);
+
+                intent.setClass(getActivity(), MovieDetail.class)
+                    .putExtra("selectedMovie",item);
+                startActivity(intent);
+
+            }
+        });
 
         return rootView;
     }
+
+
+
+
+
+
     public void onStart(){
         //pull Json information
-        super.onStart();
         loadMovies();
+        super.onStart();
+
     }
 
     public void loadMovies(){
@@ -189,7 +228,7 @@ public class MainActivityFragment extends Fragment {
             final String lmoviePoster = "poster_path";
             final String lvoteAverage = "vote_average";
             final String lplotSynopsis = "overview";
-
+            final String id = "id";
 
             //get movie info and put it into a JSONArray
             JSONObject forecastJson = new JSONObject(forecastJsonStr);
@@ -209,7 +248,7 @@ public class MainActivityFragment extends Fragment {
                 String moviePoster = movie.getString(lmoviePoster);
                 String voteAverage = movie.getString(lvoteAverage);
                 String plot = movie.getString(lplotSynopsis);
-
+                String movieid = movie.getString(id);
 
                 System.out.println("poster"+i+moviePoster);
                 System.out.println("poster"+i+title);
@@ -219,7 +258,7 @@ public class MainActivityFragment extends Fragment {
 
 
 
-                moviesPlaying[i] = new Movie(title, releaseDate, moviePoster, voteAverage, plot);
+                moviesPlaying[i] = new Movie(title, releaseDate, moviePoster, voteAverage, plot,id);
                 System.out.print("length: "+moviesPlaying.length);
 
             }

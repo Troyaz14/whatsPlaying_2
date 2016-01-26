@@ -4,5 +4,6 @@
     <string name="title_activity_settings">SettingsActivity</string>
     <string name="sort_key">Sort Order Used</string>
     <string name="default_sort_value">Most Popular</string>
+    <string name="title_activity_movie_detail">MovieDetail</string>
 
 </resources>
