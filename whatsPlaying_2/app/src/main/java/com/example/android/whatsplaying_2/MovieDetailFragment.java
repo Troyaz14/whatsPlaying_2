@@ -17,7 +17,6 @@ import com.squareup.picasso.Picasso;
 public class MovieDetailFragment extends Fragment {
 
     public Movie movie;
-    public Intent intent;
     Bundle b;
     public MovieDetailFragment() {
     }
@@ -44,10 +43,9 @@ public class MovieDetailFragment extends Fragment {
         if (b != null) {
             //get movie object from bundle
             movie = b.getParcelable("selectedMovie");
+            
         }
-
-
-
+        //get movie information
         title.setText(movie.movieTitle);
         releaseDate.setText("Release Date: "+movie.releaseDate);
         VoteAve.setText("Rating: "+movie.voteAverage);

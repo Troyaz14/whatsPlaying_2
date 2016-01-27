@@ -31,12 +31,6 @@ import java.util.ArrayList;
  */
 public class MainActivityFragment extends Fragment {
     private MovieAdapter movieAdapter;
-//    public ArrayAdapter<Movie> myMovies;
-   /* public Movie[] newMovie = {
-        new Movie("lmovieTitle", "lreleaseDate", "lmoviePoster", "lvoteAverage", "String lplotSynopsis"),
-        new Movie("lmovieTitle", "lreleaseDate", "lmoviePoster", "lvoteAverage", "String lplotSynopsis"),
-} ;*/
-    public  Movie[] newMovie;
     public ArrayList<Movie> mList;
 
 
@@ -75,13 +69,9 @@ public class MainActivityFragment extends Fragment {
                 Movie item = movieAdapter.getItem(i);
                 //create intent for placeholder fragment
                 Intent intent = new Intent();
-
-                //put movie information into a bundle and pass to pass it to the intent
-                //Bundle b = new Bundle();
-                //b.putParcelable("selectedMovie",item);
-
+                
                 intent.setClass(getActivity(), MovieDetail.class)
-                    .putExtra("selectedMovie",item);
+                        .putExtra("selectedMovie",item);
                 startActivity(intent);
 
             }
@@ -89,12 +79,7 @@ public class MainActivityFragment extends Fragment {
 
         return rootView;
     }
-
-
-
-
-
-
+    
     public void onStart(){
         //pull Json information
         loadMovies();
@@ -117,8 +102,7 @@ public class MainActivityFragment extends Fragment {
             BufferedReader reader = null;
 
             // Will contain the raw JSON response as a string.
-            String forecastJsonStr = null;
-            String format = "json";
+            String movieString = null;
             String sortOrder;
             Uri.Builder builder;
 
@@ -168,18 +152,16 @@ public class MainActivityFragment extends Fragment {
 
                 String line;
                 while ((line = reader.readLine()) != null) {
-                    // Since it's JSON, adding a newline isn't necessary (it won't affect parsing)
-                    // But it does make debugging a *lot* easier if you print out the completed
-                    // buffer for debugging.
+
                     buffer.append(line + "\n");
                 }
 
                 if (buffer.length() == 0) {
-                    // Stream was empty.  No point in parsing.
+                    // Stream is empty.
                     return null;
                 }
-                forecastJsonStr = buffer.toString();
-                System.out.println("Movies" + forecastJsonStr);
+                movieString = buffer.toString();
+                System.out.println("Movies" + movieString);
 
 
             } catch (
@@ -190,8 +172,6 @@ public class MainActivityFragment extends Fragment {
 
             {
                 Log.e("loadMovieInfo", "Error ", e);
-                // If the code didn't successfully get the weather data, there's no point in attemping
-                // to parse it.
                 return null;
             } finally
 
@@ -210,7 +190,7 @@ public class MainActivityFragment extends Fragment {
             }
 
                      try {
-                         return getMovieData(forecastJsonStr);
+                         return getMovieData(movieString);
                      } catch (JSONException e) {
                           Log.e(LOG_TAG, e.getMessage(), e);
                          e.printStackTrace();
@@ -221,7 +201,7 @@ public class MainActivityFragment extends Fragment {
 
         }
 
-        private Movie[] getMovieData(String forecastJsonStr) throws JSONException{
+        private Movie[] getMovieData(String movieJsonStr) throws JSONException{
             final String getResults = "results";
             final String lmovieTitle = "title";
             final String lreleaseDate = "release_date";
@@ -231,9 +211,10 @@ public class MainActivityFragment extends Fragment {
             final String id = "id";
 
             //get movie info and put it into a JSONArray
-            JSONObject forecastJson = new JSONObject(forecastJsonStr);
-            JSONArray movieArray = forecastJson.getJSONArray(getResults);
+            JSONObject movieJSON = new JSONObject(movieJsonStr);
+            JSONArray movieArray = movieJSON.getJSONArray(getResults);
 
+            //this will hold movie objects
             Movie[] moviesPlaying = new Movie[movieArray.length()];
 
 
@@ -243,6 +224,7 @@ public class MainActivityFragment extends Fragment {
                 //get individual movie info
                 JSONObject movie = movieArray.getJSONObject(i);
 
+                //create strings to pass to object
                 String title = movie.getString(lmovieTitle);
                 String releaseDate = movie.getString(lreleaseDate);
                 String moviePoster = movie.getString(lmoviePoster);
@@ -250,17 +232,8 @@ public class MainActivityFragment extends Fragment {
                 String plot = movie.getString(lplotSynopsis);
                 String movieid = movie.getString(id);
 
-                System.out.println("poster"+i+moviePoster);
-                System.out.println("poster"+i+title);
-                System.out.println("poster"+i+releaseDate);
-                System.out.println("poster"+i+voteAverage);
-                System.out.println("poster"+i+plot);
-
-
-
-                moviesPlaying[i] = new Movie(title, releaseDate, moviePoster, voteAverage, plot,id);
-                System.out.print("length: "+moviesPlaying.length);
-
+                //create object
+                moviesPlaying[i] = new Movie(title, releaseDate, moviePoster, voteAverage, plot,movieid);
             }
 
             return moviesPlaying;
